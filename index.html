@@ -1,0 +1,782 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>ใบสมัครงาน - บริษัท ลาดกระบัง เข็มเจาะ จำกัด</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Sarabun:wght@400;600;700;800&display=swap');
+*{box-sizing:border-box;margin:0;padding:0;}
+body{font-family:'Sarabun',sans-serif;background:#f4f7f5;color:#0a2e18;font-size:15px;}
+.hdr{background:#0d5c2e;color:white;}
+.hdr-in{max-width:960px;margin:0 auto;padding:14px 20px;display:flex;align-items:center;gap:14px;}
+.logo{width:52px;height:auto;flex-shrink:0;}
+.hdr-txt h1{font-size:1.08rem;font-weight:800;}
+.hdr-txt p{font-size:0.74rem;opacity:.72;margin-top:2px;line-height:1.5;}
+.hdr-bar{height:3px;background:linear-gradient(90deg,#2aaa6e,#22c55e,transparent);}
+.wrap{max-width:960px;margin:0 auto;padding:22px 16px 50px;}
+.card{background:white;border-radius:12px;box-shadow:0 2px 14px rgba(13,92,46,.09);border:1px solid #c8ddd0;overflow:hidden;}
+.card-hdr{background:#0d5c2e;color:white;padding:14px 22px;text-align:center;}
+.card-hdr h2{font-size:1rem;font-weight:800;}
+.card-hdr p{font-size:0.72rem;opacity:.7;margin-top:2px;}
+.sec{padding:18px 22px;border-bottom:1px solid #c8ddd0;}
+.sec:last-child{border-bottom:none;}
+.ttl{font-size:0.86rem;font-weight:800;color:#0d5c2e;border-bottom:2px solid #c8ddd0;padding-bottom:7px;margin-bottom:12px;}
+.g{display:grid;gap:9px;}
+.g2{grid-template-columns:1fr 1fr;}
+.g3{grid-template-columns:1fr 1fr 1fr;}
+.g4{grid-template-columns:1fr 1fr 1fr 1fr;}
+.g5{grid-template-columns:1fr 1fr 1fr 1fr 1fr;}
+.s2{grid-column:span 2;}.s3{grid-column:span 3;}.s4{grid-column:span 4;}.s5{grid-column:span 5;}
+.fld{display:flex;flex-direction:column;gap:3px;}
+.fld label{font-size:0.72rem;font-weight:700;color:#4a7060;}
+.req{color:#cc2222;margin-left:2px;}
+input[type=text],input[type=email],input[type=tel],input[type=date],input[type=number],select,textarea{
+  width:100%;padding:7px 10px;border:1.5px solid #c8ddd0;border-radius:7px;
+  font-family:inherit;font-size:0.84rem;color:#0a2e18;background:#fafffe;outline:none;
+  transition:border-color .15s,box-shadow .15s;}
+input:focus,select:focus,textarea:focus{border-color:#1a8c48;box-shadow:0 0 0 3px rgba(26,140,72,.09);background:white;}
+input[readonly]{background:#f0f5f2;color:#4a7060;}
+textarea{resize:vertical;min-height:68px;}
+.photo-wrap{display:flex;gap:16px;align-items:flex-start;}
+.photo-box{width:100px;height:132px;border:2px dashed #c8ddd0;border-radius:7px;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  cursor:pointer;overflow:hidden;background:#fafffe;flex-shrink:0;}
+.photo-box:hover{border-color:#1a8c48;}
+.photo-box img{width:100%;height:100%;object-fit:cover;display:none;}
+.photo-lbl{font-size:0.68rem;color:#4a7060;text-align:center;padding:6px;line-height:1.5;}
+.fields{flex:1;}
+.chk{display:flex;flex-wrap:wrap;gap:7px 12px;padding-top:3px;}
+.chk label{display:flex;align-items:center;gap:4px;font-size:0.82rem;cursor:pointer;}
+.chk input{width:14px;height:14px;accent-color:#1a8c48;cursor:pointer;}
+.tbl{width:100%;border-collapse:collapse;font-size:0.77rem;}
+.tbl th{background:#0d5c2e;color:white;padding:7px 5px;text-align:center;font-size:0.70rem;}
+.tbl td{padding:3px 2px;border-bottom:1px solid #c8ddd0;}
+.tbl input{padding:5px 6px;font-size:0.76rem;border-radius:5px;}
+.lang-tbl{width:100%;border-collapse:collapse;font-size:0.78rem;}
+.lang-tbl th,.lang-tbl td{border:1px solid #c8ddd0;padding:6px 4px;text-align:center;}
+.lang-tbl th{background:#e6f4ec;color:#0d5c2e;font-size:0.70rem;font-weight:700;}
+.lang-tbl td:first-child{text-align:left;padding-left:10px;font-weight:600;}
+.add-btn{margin-top:7px;padding:5px 14px;background:none;border:1.5px dashed #1a8c48;
+  border-radius:6px;cursor:pointer;color:#1a8c48;font-family:inherit;font-size:0.78rem;font-weight:700;}
+.add-btn:hover{background:rgba(26,140,72,.07);}
+.act{padding:16px 22px;background:#f2f8f5;border-top:1px solid #c8ddd0;display:flex;gap:10px;justify-content:flex-end;}
+.btn-s{padding:10px 28px;background:linear-gradient(135deg,#0d5c2e,#1a8c48);color:white;border:none;
+  border-radius:8px;font-family:inherit;font-size:0.90rem;font-weight:800;cursor:pointer;
+  box-shadow:0 3px 10px rgba(13,92,46,.20);transition:all .18s;}
+.btn-s:hover:not(:disabled){transform:translateY(-1px);}
+.btn-s:disabled{opacity:.5;cursor:not-allowed;}
+.btn-c{padding:10px 16px;background:white;color:#0d5c2e;border:1.5px solid #c8ddd0;
+  border-radius:8px;font-family:inherit;font-size:0.86rem;font-weight:700;cursor:pointer;}
+.btn-c:hover{border-color:#1a8c48;background:#f0faf4;}
+.done{display:none;text-align:center;padding:56px 28px;}
+.done.show{display:block;}
+.done h2{font-size:1.25rem;color:#0d5c2e;margin-bottom:10px;}
+.done p{color:#4a7060;font-size:0.88rem;line-height:1.8;margin-bottom:20px;}
+.overlay{display:none;position:fixed;inset:0;background:rgba(255,255,255,.85);
+  z-index:9999;align-items:center;justify-content:center;flex-direction:column;gap:12px;}
+.overlay.show{display:flex;}
+.spin{width:38px;height:38px;border:4px solid #c8ddd0;border-top-color:#1a8c48;
+  border-radius:50%;animation:sp .7s linear infinite;}
+@keyframes sp{to{transform:rotate(360deg);}}
+.toast{position:fixed;bottom:20px;right:20px;padding:11px 18px;border-radius:8px;
+  font-size:0.84rem;font-weight:700;color:white;box-shadow:0 3px 14px rgba(0,0,0,.15);
+  transform:translateY(70px);opacity:0;transition:all .28s;z-index:9998;}
+.toast.show{transform:translateY(0);opacity:1;}
+.ts{background:#059669;}.te{background:#dc2626;}
+@media(max-width:640px){
+  .g4,.g5{grid-template-columns:1fr 1fr;}
+  .g3{grid-template-columns:1fr 1fr;}
+  .g2{grid-template-columns:1fr;}
+  .s2,.s3,.s4,.s5{grid-column:span 1;}
+  .sec{padding:14px 12px;}
+  .photo-wrap{flex-direction:column;}
+  .photo-box{width:100%;height:110px;}
+}
+</style>
+</head>
+<body>
+<header class="hdr">
+  <div class="hdr-in">
+    <img class="logo" src="data:image/png;base64,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" alt="LBB">
+    <div class="hdr-txt">
+      <h1>บริษัท ลาดกระบัง เข็มเจาะ จำกัด</h1>
+      <p>LADKRABANG BORED PILE CO., LTD.<br>
+      19/2 ถนนฉลองกรุง แขวงลำปลาทิว เขตลาดกระบัง กรุงเทพฯ 10520 | Tel: (02) 737-4458 Fax: (02) 737-4459</p>
+    </div>
+  </div>
+  <div class="hdr-bar"></div>
+</header>
+
+<main class="wrap">
+  <div class="done" id="done">
+    <div style="font-size:3.5rem;color:#059669;margin-bottom:12px">&#10003;</div>
+    <h2>ส่งใบสมัครเรียบร้อยแล้ว</h2>
+    <p>ขอบคุณที่สนใจร่วมงานกับบริษัท ลาดกระบัง เข็มเจาะ จำกัด<br>
+    ทีม HR จะติดต่อกลับตามข้อมูลที่ท่านกรอกไว้<br>
+    <small>PDF ใบสมัครถูกดาวน์โหลดให้ท่านแล้ว</small></p>
+    <button class="btn-s" onclick="resetForm()">สมัครใหม่</button>
+  </div>
+
+  <div id="fw">
+  <form id="form" onsubmit="handleSubmit(event)">
+  <div class="card">
+    <div class="card-hdr">
+      <h2>ใบสมัครงาน / APPLICATION FOR EMPLOYMENT</h2>
+      <p>FM-HR-01-03 : Rev.00 : Eff.10-04-2568 | กรอกข้อมูลด้วยตัวท่านเอง (To be completed in own handwriting)</p>
+    </div>
+
+    <div class="sec">
+      <div class="g g2">
+        <div class="fld"><label>ตำแหน่งที่ต้องการสมัคร <span class="req">*</span></label><input type="text" id="pos" required></div>
+        <div class="fld"><label>เงินเดือนที่ต้องการ (บาท/เดือน) <span class="req">*</span></label><input type="number" id="sal" required></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="ttl">ประวัติส่วนตัว (Personal Information)</div>
+      <div class="photo-wrap">
+        <div>
+          <div class="photo-box" onclick="document.getElementById('pi').click()">
+            <img id="pimg" alt="">
+            <span class="photo-lbl" id="plbl">รูปถ่าย<br>1 นิ้ว<br>คลิกเพื่อเลือก</span>
+          </div>
+          <input type="file" id="pi" accept="image/*" style="display:none" onchange="previewPhoto(this)">
+        </div>
+        <div class="fields">
+          <div class="g g2" style="margin-bottom:8px">
+            <div class="fld s2"><label>ชื่อ - นามสกุล (ภาษาไทย) <span class="req">*</span></label><input type="text" id="nameTH" required></div>
+            <div class="fld s2"><label>Name - Surname (English)</label><input type="text" id="nameEN"></div>
+          </div>
+          <div class="g g4">
+            <div class="fld s2"><label>เลขที่</label><input type="text" id="ano"></div>
+            <div class="fld"><label>หมู่ที่</label><input type="text" id="amoo"></div>
+            <div class="fld"><label>ถนน</label><input type="text" id="aroad"></div>
+            <div class="fld s2"><label>ตำบล/แขวง</label><input type="text" id="asub"></div>
+            <div class="fld"><label>อำเภอ/เขต</label><input type="text" id="adis"></div>
+            <div class="fld"><label>จังหวัด</label><input type="text" id="apro"></div>
+            <div class="fld"><label>รหัสไปรษณีย์</label><input type="text" id="apost" maxlength="5"></div>
+          </div>
+        </div>
+      </div>
+      <div class="g g4" style="margin-top:8px">
+        <div class="fld"><label>โทรศัพท์</label><input type="tel" id="tel"></div>
+        <div class="fld"><label>มือถือ <span class="req">*</span></label><input type="tel" id="mobile" required></div>
+        <div class="fld s2"><label>อีเมล์</label><input type="email" id="email"></div>
+      </div>
+      <div class="g g2" style="margin-top:10px">
+        <div class="fld"><label>ที่พักอาศัย</label>
+          <div class="chk">
+            <label><input type="radio" name="hous" value="อาศัยกับครอบครัว"> อาศัยกับครอบครัว</label>
+            <label><input type="radio" name="hous" value="บ้านตัวเอง"> บ้านตัวเอง</label>
+            <label><input type="radio" name="hous" value="บ้านเช่า"> บ้านเช่า</label>
+            <label><input type="radio" name="hous" value="หอพัก"> หอพัก</label>
+          </div>
+        </div>
+        <div class="fld"><label>เพศ</label>
+          <div class="chk">
+            <label><input type="radio" name="sex" value="ชาย"> ชาย</label>
+            <label><input type="radio" name="sex" value="หญิง"> หญิง</label>
+          </div>
+        </div>
+      </div>
+      <div class="g g5" style="margin-top:8px">
+        <div class="fld s2"><label>วัน เดือน ปีเกิด</label><input type="date" id="dob" onchange="calcAge()"></div>
+        <div class="fld"><label>อายุ (ปี)</label><input type="number" id="age"></div>
+        <div class="fld"><label>เชื้อชาติ</label><input type="text" id="race"></div>
+        <div class="fld"><label>สัญชาติ</label><input type="text" id="nat"></div>
+      </div>
+      <div class="g g4" style="margin-top:8px">
+        <div class="fld"><label>ศาสนา</label><input type="text" id="rel"></div>
+        <div class="fld s2"><label>บัตรประชาชนเลขที่</label><input type="text" id="idc" maxlength="13"></div>
+        <div class="fld"><label>บัตรหมดอายุ</label><input type="date" id="idexp"></div>
+        <div class="fld"><label>ส่วนสูง (ซม.)</label><input type="number" id="ht"></div>
+        <div class="fld"><label>น้ำหนัก (กก.)</label><input type="number" id="wt"></div>
+      </div>
+      <div class="g g2" style="margin-top:10px">
+        <div class="fld"><label>สถานภาพ</label>
+          <div class="chk">
+            <label><input type="radio" name="mar" value="โสด"> โสด</label>
+            <label><input type="radio" name="mar" value="แต่งงาน"> แต่งงาน</label>
+            <label><input type="radio" name="mar" value="หม้าย"> หม้าย</label>
+            <label><input type="radio" name="mar" value="แยกกัน"> แยกกัน</label>
+          </div>
+        </div>
+        <div class="fld"><label>ภาวะทางทหาร</label>
+          <div class="chk">
+            <label><input type="radio" name="mil" value="ได้รับการยกเว้น"> ได้รับการยกเว้น</label>
+            <label><input type="radio" name="mil" value="ปลดเป็นทหารกองหนุน"> ปลดแล้ว</label>
+            <label><input type="radio" name="mil" value="ยังไม่ได้รับการเกณฑ์"> ยังไม่ได้รับการเกณฑ์</label>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="ttl">ประวัติครอบครัว (Family Information)</div>
+      <div class="g g5">
+        <div class="fld s3"><label>ชื่อ-สกุล บิดา</label><input type="text" id="fn"></div>
+        <div class="fld"><label>อายุ (ปี)</label><input type="number" id="fa"></div>
+        <div class="fld"><label>อาชีพ</label><input type="text" id="fj"></div>
+        <div class="fld s3"><label>ชื่อ-สกุล มารดา</label><input type="text" id="mn"></div>
+        <div class="fld"><label>อายุ (ปี)</label><input type="number" id="ma"></div>
+        <div class="fld"><label>อาชีพ</label><input type="text" id="mj"></div>
+        <div class="fld s2"><label>ชื่อสามี/ภรรยา</label><input type="text" id="spn"></div>
+        <div class="fld s2"><label>สถานที่ทำงาน</label><input type="text" id="spw"></div>
+        <div class="fld"><label>ตำแหน่ง</label><input type="text" id="spp"></div>
+        <div class="fld"><label>จำนวนบุตร (คน)</label><input type="number" id="ch" min="0" value="0"></div>
+      </div>
+      <div style="margin-top:12px">
+        <div class="ttl" style="font-size:0.78rem">ญาติพี่น้องหรือบุคคลที่อยู่รวมกับท่าน</div>
+        <div id="relBody">
+          <div class="g g4" style="margin-bottom:5px">
+            <div class="fld"><label>ชื่อ-สกุล</label><input type="text" name="rn[]"></div>
+            <div class="fld"><label>อายุ</label><input type="number" name="ra[]"></div>
+            <div class="fld"><label>อาชีพ</label><input type="text" name="rj[]"></div>
+            <div class="fld"><label>ความสัมพันธ์</label><input type="text" name="rr[]"></div>
+          </div>
+        </div>
+        <button type="button" class="add-btn" onclick="addRel()">+ เพิ่มรายการ</button>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="ttl">รายละเอียดของงานที่ผ่านมา เรียงลำดับก่อน-หลัง (Working Experience In Chronological)</div>
+      <div style="overflow-x:auto">
+        <table class="tbl">
+          <thead><tr>
+            <th style="min-width:100px">สถานที่ทำงาน</th>
+            <th style="min-width:68px">ตั้งแต่</th>
+            <th style="min-width:68px">ถึง</th>
+            <th style="min-width:95px">ตำแหน่งงาน</th>
+            <th style="min-width:95px">ลักษณะงาน</th>
+            <th style="min-width:68px">ค่าจ้าง</th>
+            <th style="min-width:95px">เหตุที่ออก</th>
+            <th></th>
+          </tr></thead>
+          <tbody id="expBody">
+            <tr>
+              <td><input type="text" name="ec[]"></td>
+              <td><input type="text" name="ef[]" placeholder="เดือน/ปี"></td>
+              <td><input type="text" name="et[]" placeholder="เดือน/ปี"></td>
+              <td><input type="text" name="ep[]"></td>
+              <td><input type="text" name="ed[]"></td>
+              <td><input type="number" name="es[]"></td>
+              <td><input type="text" name="er[]"></td>
+              <td><button type="button" onclick="delRow(this)" style="background:none;border:none;cursor:pointer;color:#c00;font-size:15px">x</button></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <button type="button" class="add-btn" onclick="addExp()">+ เพิ่มประวัติการทำงาน</button>
+    </div>
+
+    <div class="sec">
+      <div class="ttl">การศึกษา (Education)</div>
+      <div style="overflow-x:auto">
+        <table class="tbl">
+          <thead><tr>
+            <th style="min-width:130px">ระดับการศึกษา</th>
+            <th style="min-width:150px">สถาบันการศึกษา</th>
+            <th style="min-width:110px">สาขาวิชา</th>
+            <th style="min-width:65px">ตั้งแต่</th>
+            <th style="min-width:65px">ถึง</th>
+          </tr></thead>
+          <tbody>
+            <tr><td><input type="text" value="มัธยมศึกษาตอนปลาย" readonly></td><td><input type="text" name="ei[]"></td><td><input type="text" name="em[]"></td><td><input type="text" name="ef2[]" placeholder="ปี พ.ศ."></td><td><input type="text" name="et2[]"></td></tr>
+            <tr><td><input type="text" value="ปวช." readonly></td><td><input type="text" name="ei[]"></td><td><input type="text" name="em[]"></td><td><input type="text" name="ef2[]"></td><td><input type="text" name="et2[]"></td></tr>
+            <tr><td><input type="text" value="ปวท./ปวส." readonly></td><td><input type="text" name="ei[]"></td><td><input type="text" name="em[]"></td><td><input type="text" name="ef2[]"></td><td><input type="text" name="et2[]"></td></tr>
+            <tr><td><input type="text" value="ปริญญาตรี" readonly></td><td><input type="text" name="ei[]"></td><td><input type="text" name="em[]"></td><td><input type="text" name="ef2[]"></td><td><input type="text" name="et2[]"></td></tr>
+            <tr><td><input type="text" value="สูงกว่าปริญญาตรี" readonly></td><td><input type="text" name="ei[]"></td><td><input type="text" name="em[]"></td><td><input type="text" name="ef2[]"></td><td><input type="text" name="et2[]"></td></tr>
+            <tr><td><input type="text" id="el6" placeholder="อื่นๆ ระบุ"></td><td><input type="text" name="ei[]"></td><td><input type="text" name="em[]"></td><td><input type="text" name="ef2[]"></td><td><input type="text" name="et2[]"></td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="ttl">ภาษา (Language Ability)</div>
+      <div style="overflow-x:auto">
+        <table class="lang-tbl">
+          <thead>
+            <tr><th rowspan="2" style="text-align:left;padding-left:10px;min-width:90px">ภาษา</th>
+              <th colspan="3">พูด (Speaking)</th><th colspan="3">เขียน (Writing)</th><th colspan="3">อ่าน (Reading)</th></tr>
+            <tr><th>ดี</th><th>ปานกลาง</th><th>พอใช้</th><th>ดี</th><th>ปานกลาง</th><th>พอใช้</th><th>ดี</th><th>ปานกลาง</th><th>พอใช้</th></tr>
+          </thead>
+          <tbody>
+            <tr><td>ภาษาไทย</td>
+              <td><input type="radio" name="ts" value="ดี"></td><td><input type="radio" name="ts" value="ปานกลาง"></td><td><input type="radio" name="ts" value="พอใช้"></td>
+              <td><input type="radio" name="tw" value="ดี"></td><td><input type="radio" name="tw" value="ปานกลาง"></td><td><input type="radio" name="tw" value="พอใช้"></td>
+              <td><input type="radio" name="tr" value="ดี"></td><td><input type="radio" name="tr" value="ปานกลาง"></td><td><input type="radio" name="tr" value="พอใช้"></td>
+            </tr>
+            <tr><td>ภาษาอังกฤษ</td>
+              <td><input type="radio" name="es" value="ดี"></td><td><input type="radio" name="es" value="ปานกลาง"></td><td><input type="radio" name="es" value="พอใช้"></td>
+              <td><input type="radio" name="ew" value="ดี"></td><td><input type="radio" name="ew" value="ปานกลาง"></td><td><input type="radio" name="ew" value="พอใช้"></td>
+              <td><input type="radio" name="er2" value="ดี"></td><td><input type="radio" name="er2" value="ปานกลาง"></td><td><input type="radio" name="er2" value="พอใช้"></td>
+            </tr>
+            <tr><td><input type="text" name="lang3" placeholder="อื่นๆ" style="border:none;background:transparent;font-size:0.78rem;padding:2px 4px;width:80px"></td>
+              <td><input type="radio" name="os" value="ดี"></td><td><input type="radio" name="os" value="ปานกลาง"></td><td><input type="radio" name="os" value="พอใช้"></td>
+              <td><input type="radio" name="ow" value="ดี"></td><td><input type="radio" name="ow" value="ปานกลาง"></td><td><input type="radio" name="ow" value="พอใช้"></td>
+              <td><input type="radio" name="or2" value="ดี"></td><td><input type="radio" name="or2" value="ปานกลาง"></td><td><input type="radio" name="or2" value="พอใช้"></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="ttl">ความสามารถพิเศษ (Special Ability)</div>
+      <div class="g g4">
+        <div class="fld s4"><label>พิมพ์ดีด</label><div class="chk"><label><input type="checkbox" id="typ"> ทำได้</label></div></div>
+        <div class="fld"><label>ภาษาไทย (คำ/นาที)</label><input type="number" id="tth" placeholder="0"></div>
+        <div class="fld"><label>ภาษาอังกฤษ (คำ/นาที)</label><input type="number" id="ten" placeholder="0"></div>
+        <div class="fld s2"></div>
+        <div class="fld s4"><label>คอมพิวเตอร์</label><div class="chk" style="margin-bottom:4px"><label><input type="checkbox" id="comp"> ทำได้</label></div><input type="text" id="compt" placeholder="ระบุโปรแกรมที่ใช้ได้"></div>
+        <div class="fld s2"><label>ความสามารถขับขี่</label><div class="chk"><label><input type="checkbox" id="dcar"> รถยนต์</label><label><input type="checkbox" id="dmot"> รถจักรยานยนต์</label></div></div>
+        <div class="fld s2"><label>เลขที่ใบขับขี่</label><input type="text" id="lic"></div>
+        <div class="fld s2"><label>รถส่วนตัว</label><div class="chk"><label><input type="checkbox" id="ocar"> รถยนต์</label><label><input type="checkbox" id="omot"> รถจักรยานยนต์</label></div></div>
+        <div class="fld s2"><label>ความสามารถในการใช้เครื่องใช้สำนักงาน</label><input type="text" id="ofm"></div>
+        <div class="fld s2"><label>งานอดิเรก</label><input type="text" id="hob"></div>
+        <div class="fld s2"><label>กีฬาที่ชอบ</label><input type="text" id="spt"></div>
+        <div class="fld"><label>ความสามารถพิเศษ 1</label><input type="text" id="sk1"></div>
+        <div class="fld"><label>ความสามารถพิเศษ 2</label><input type="text" id="sk2"></div>
+        <div class="fld"><label>ความสามารถพิเศษ 3</label><input type="text" id="sk3"></div>
+        <div class="fld"><label>อื่นๆ</label><input type="text" id="sko"></div>
+        <div class="fld s2"><label>สามารถไปปฏิบัติงานต่างจังหวัด</label><div class="chk"><label><input type="radio" name="up" value="ได้"> ได้</label><label><input type="radio" name="up" value="ไม่ได้"> ไม่ได้</label></div></div>
+        <div class="fld s2"><label>อื่นๆ ระบุ</label><input type="text" id="upn"></div>
+        <div class="fld s2"><label>เคยป่วยหนักหรือเป็นโรคติดต่อร้ายแรง</label><div class="chk"><label><input type="radio" name="dis" value="เคย"> เคย</label><label><input type="radio" name="dis" value="ไม่เคย"> ไม่เคย</label></div></div>
+        <div class="fld s2"><label>ถ้าเคย โปรดระบุชื่อโรค</label><input type="text" id="disn"></div>
+        <div class="fld s2"><label>เคยมีคดีต้องห้ามใดๆ</label><div class="chk"><label><input type="radio" name="crim" value="เคย"> เคย</label><label><input type="radio" name="crim" value="ไม่เคย"> ไม่เคย</label></div></div>
+        <div class="fld s2"><label>ถ้าเคย ระบุ</label><input type="text" id="crimd"></div>
+        <div class="fld s2"><label>เคยเกี่ยวข้องกับสารเสพติด</label><div class="chk"><label><input type="radio" name="drug" value="เคย"> เคย</label><label><input type="radio" name="drug" value="ไม่เคย"> ไม่เคย</label></div></div>
+        <div class="fld s2"><label>ถ้าเคย ระบุ</label><input type="text" id="drugd"></div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <div class="ttl">ข้อมูลเพิ่มเติม</div>
+      <div class="g g4">
+        <div class="fld s3"><label>กรณีฉุกเฉิน ติดต่อ ชื่อ-นามสกุล</label><input type="text" id="emn"></div>
+        <div class="fld"><label>เกี่ยวข้องกับผู้สมัครเป็น</label><input type="text" id="emr"></div>
+        <div class="fld s3"><label>ที่อยู่</label><input type="text" id="ema"></div>
+        <div class="fld"><label>โทร.</label><input type="tel" id="emt"></div>
+        <div class="fld s4"><label>ทราบข่าวการรับสมัครจาก</label><input type="text" id="src"></div>
+        <div class="fld s4"><label>ชื่อญาติ/เพื่อน ที่ทำงานอยู่ในบริษัทฯ ซึ่งท่านรู้จักดี</label><input type="text" id="ref"></div>
+        <div class="fld s4"><label>กรุณาแนะนำตัวท่านเอง เพื่อให้บริษัทรู้จักท่านดีขึ้น</label><textarea id="intro" rows="4"></textarea></div>
+      </div>
+      <div style="margin-top:14px;padding:12px 14px;background:#f2f8f5;border-radius:7px;font-size:0.76rem;color:#4a7060;line-height:1.8;border:1px solid #c8ddd0">
+        ข้าพเจ้าขอรับรองว่าข้อความดังกล่าวทั้งหมดในใบสมัครนี้เป็นความจริงทุกประการ หลังจากบริษัทฯ จ้างเข้ามาทำงานแล้วปรากฏว่า ข้อความในใบสมัครงาน เอกสารที่นำมาแสดง หรือรายละเอียดที่ให้ไว้ไม่เป็นความจริง บริษัทฯ มีสิทธิ์ที่จะเลิกจ้างข้าพเจ้าได้โดยไม่ต้องจ่ายเงินชดเชยหรือค่าเสียหายใดๆ ทั้งสิ้น<br>
+        I certify all statement given in this application form is true if any is found to be untrue after engagement. The Company has right to terminate my employment without any compensation or severance pay what soever.
+      </div>
+      <div style="text-align:right;margin-top:12px;font-size:0.82rem;color:#4a7060">ลายมือชื่อผู้สมัคร .............................................</div>
+    </div>
+
+    <div class="act">
+      <button type="button" class="btn-c" onclick="clearForm()">ล้างข้อมูล</button>
+      <button type="submit" class="btn-s" id="subbtn">ส่งใบสมัคร</button>
+    </div>
+  </div>
+  </form>
+  </div>
+</main>
+
+<div class="overlay" id="ov"><div class="spin"></div><p style="color:#0d5c2e;font-weight:700;font-size:0.86rem">กำลังส่งข้อมูล...</p></div>
+<div class="toast" id="toast"></div>
+
+<script>
+
+var photoData = '';
+var SURL = 'https://script.google.com/macros/s/AKfycbwTyVuIxbmW4j7wbAB1-ps9joUDYq5PeQOAvX02KlRGPjSp3LQx04-mjr5MRcPrPtr4fg/exec';
+
+function previewPhoto(input) {
+  var file = input.files[0];
+  if (!file) return;
+  var reader = new FileReader();
+  reader.onload = function(e) {
+    photoData = e.target.result;
+    var img = document.getElementById('pimg');
+    img.src = photoData;
+    img.style.display = 'block';
+    document.getElementById('plbl').style.display = 'none';
+  };
+  reader.readAsDataURL(file);
+}
+
+function calcAge() {
+  var d = document.getElementById('dob').value;
+  if (d) document.getElementById('age').value = Math.floor((Date.now() - new Date(d)) / (1000*60*60*24*365.25));
+}
+
+function delRow(btn) { btn.parentNode.parentNode.remove(); }
+
+function addExp() {
+  var tbody = document.getElementById('expBody');
+  var tr = document.createElement('tr');
+  tr.innerHTML = [
+    '<input type="text" name="ec[]">',
+    '<input type="text" name="ef[]" placeholder="เดือน/ปี">',
+    '<input type="text" name="et[]" placeholder="เดือน/ปี">',
+    '<input type="text" name="ep[]">',
+    '<input type="text" name="ed[]">',
+    '<input type="number" name="es[]">',
+    '<input type="text" name="er[]">',
+    '<button type="button" onclick="delRow(this)" style="background:none;border:none;cursor:pointer;color:#c00;font-size:15px">x</button>'
+  ].map(function(c){ return '<td>' + c + '</td>'; }).join('');
+  tbody.appendChild(tr);
+}
+
+function addRel() {
+  var div = document.createElement('div');
+  div.className = 'g g4';
+  div.style.marginBottom = '5px';
+  div.innerHTML = [
+    ['ชื่อ-สกุล','rn[]','text'],
+    ['อายุ','ra[]','number'],
+    ['อาชีพ','rj[]','text'],
+    ['ความสัมพันธ์','rr[]','text']
+  ].map(function(f){
+    return '<div class="fld"><label>' + f[0] + '</label><input type="' + f[2] + '" name="' + f[1] + '"></div>';
+  }).join('');
+  document.getElementById('relBody').appendChild(div);
+}
+
+function gv(id) { var el = document.getElementById(id); return el ? el.value : ''; }
+function rv(n) { var el = document.querySelector('[name="'+n+'"]:checked'); return el ? el.value : ''; }
+function cv(id) { var el = document.getElementById(id); return !!(el && el.checked); }
+function getArr(n) { return Array.from(document.querySelectorAll('[name="'+n+'"]')).map(function(e){ return e.value; }); }
+
+function collectData() {
+  var ec=getArr('ec[]'), ef=getArr('ef[]'), et=getArr('et[]'), ep=getArr('ep[]'), ed=getArr('ed[]'), es=getArr('es[]'), er=getArr('er[]');
+  var exp = [];
+  for (var i=0; i<ec.length; i++) {
+    if (ec[i]) exp.push({company:ec[i], from:ef[i]||'', to:et[i]||'', position:ep[i]||'', desc:ed[i]||'', salary:es[i]||'', reason:er[i]||''});
+  }
+  var ei=getArr('ei[]'), em=getArr('em[]'), ef2=getArr('ef2[]'), et2=getArr('et2[]');
+  var lvls = ['มัธยมศึกษาตอนปลาย','ปวช.','ปวท./ปวส.','ปริญญาตรี','สูงกว่าปริญญาตรี',gv('el6')];
+  var edu = [];
+  for (var i=0; i<ei.length; i++) {
+    if (ei[i]) edu.push({level:lvls[i]||'', institution:ei[i], major:em[i]||'', from:ef2[i]||'', to:et2[i]||''});
+  }
+  var rn=getArr('rn[]'), ra=getArr('ra[]'), rj=getArr('rj[]'), rr=getArr('rr[]');
+  var rels = [];
+  for (var i=0; i<rn.length; i++) {
+    if (rn[i]) rels.push({name:rn[i], age:ra[i]||'', job:rj[i]||'', relation:rr[i]||''});
+  }
+  return {
+    submittedAt: new Date().toLocaleString('th-TH'),
+    position: gv('pos'), salary: gv('sal'),
+    nameTH: gv('nameTH'), nameEN: gv('nameEN'),
+    addrNo: gv('ano'), addrMoo: gv('amoo'), addrRoad: gv('aroad'),
+    subdistrict: gv('asub'), district: gv('adis'), province: gv('apro'), postcode: gv('apost'),
+    tel: gv('tel'), mobile: gv('mobile'), email: gv('email'),
+    housing: rv('hous'), gender: rv('sex'),
+    dob: gv('dob'), age: gv('age'), race: gv('race'), nationality: gv('nat'), religion: gv('rel'),
+    idcard: gv('idc'), idexpiry: gv('idexp'), height: gv('ht'), weight: gv('wt'),
+    marital: rv('mar'), military: rv('mil'),
+    fatherName: gv('fn'), fatherAge: gv('fa'), fatherJob: gv('fj'),
+    motherName: gv('mn'), motherAge: gv('ma'), motherJob: gv('mj'),
+    spouseName: gv('spn'), spouseWork: gv('spw'), spousePos: gv('spp'), children: gv('ch'),
+    relatives: rels, experiences: exp, education: edu,
+    thaiSpeak: rv('ts'), thaiWrite: rv('tw'), thaiRead: rv('tr'),
+    engSpeak: rv('es'), engWrite: rv('ew'), engRead: rv('er2'),
+    typingTH: gv('tth'), typingEN: gv('ten'), computer: gv('compt'),
+    driveCar: cv('dcar'), driveMoto: cv('dmot'), licenseNo: gv('lic'),
+    ownCar: cv('ocar'), ownMoto: cv('omot'), officeMachine: gv('ofm'),
+    hobbies: gv('hob'), sports: gv('spt'), upcountry: rv('up'), upcountryNote: gv('upn'),
+    skill1: gv('sk1'), skill2: gv('sk2'), skill3: gv('sk3'), skillOther: gv('sko'),
+    disease: rv('dis'), diseaseName: gv('disn'),
+    criminal: rv('crim'), criminalDetail: gv('crimd'),
+    drug: rv('drug'), drugDetail: gv('drugd'),
+    emergencyName: gv('emn'), emergencyRelation: gv('emr'),
+    emergencyAddr: gv('ema'), emergencyTel: gv('emt'),
+    referral: gv('src'), relative: gv('ref'), selfIntro: gv('intro'),
+    photo: photoData  // เก็บรูปไว้ใช้ใน PDF
+  };
+}
+
+function handleSubmit(e) {
+  e.preventDefault();
+  document.getElementById('ov').classList.add('show');
+  document.getElementById('subbtn').disabled = true;
+
+  var data = collectData();
+
+  // สร้าง PDF ก่อน (รวมรูปผู้สมัครด้วย)
+  buildPrintArea(data);
+
+  html2canvas(document.getElementById('printArea'), {
+    scale: 2,
+    useCORS: true,
+    backgroundColor: '#ffffff',
+    logging: false
+  }).then(function(canvas) {
+
+    // สร้าง PDF หลายหน้าถ้าเนื้อหายาว
+    var jsPDF = window.jspdf.jsPDF;
+    var pdf = new jsPDF({orientation:'portrait', unit:'mm', format:'a4'});
+    var pageW = 210;
+    var pageH = 297;
+    var canvasW = canvas.width;
+    var canvasH = canvas.height;
+    var pxPerMm = canvasW / pageW;
+    var pageHpx = pageH * pxPerMm;
+    var pages = Math.ceil(canvasH / pageHpx);
+
+    for (var p = 0; p < pages; p++) {
+      var srcY = p * pageHpx;
+      var srcH = Math.min(pageHpx, canvasH - srcY);
+      var pageCanvas = document.createElement('canvas');
+      pageCanvas.width = canvasW;
+      pageCanvas.height = srcH;
+      var ctx = pageCanvas.getContext('2d');
+      ctx.fillStyle = '#ffffff';
+      ctx.fillRect(0, 0, canvasW, srcH);
+      ctx.drawImage(canvas, 0, srcY, canvasW, srcH, 0, 0, canvasW, srcH);
+      var imgData = pageCanvas.toDataURL('image/jpeg', 0.88);
+      var realH = (srcH / pxPerMm);
+      if (p > 0) pdf.addPage();
+      pdf.addImage(imgData, 'JPEG', 0, 0, pageW, realH);
+    }
+
+    var pdfB64 = pdf.output('datauristring').split(',')[1];
+
+    // ส่งข้อมูล + PDF ไป Google Sheets/Email
+    var payload = {};
+    for (var k in data) payload[k] = data[k];
+    payload.pdfBase64 = pdfB64;
+    payload.photo = photoData ? '[มีรูปถ่าย]' : '';  // ไม่ส่งรูปใน JSON (ใหญ่เกิน)
+
+    fetch(SURL, {
+      method: 'POST',
+      mode: 'no-cors',
+      body: JSON.stringify(payload)
+    }).catch(function(err) {
+      console.log('Fetch note (no-cors expected):', err);
+    }).finally(function() {
+      // ดาวน์โหลด PDF ให้ผู้สมัคร
+      var a = document.createElement('a');
+      a.href = 'data:application/pdf;base64,' + pdfB64;
+      a.download = 'LBB_ใบสมัครงาน_' + (data.nameTH||'applicant') + '.pdf';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+
+      // แสดงหน้าสำเร็จ
+      document.getElementById('ov').classList.remove('show');
+      document.getElementById('fw').style.display = 'none';
+      document.getElementById('done').classList.add('show');
+
+      // ซ่อน printArea
+      var pa = document.getElementById('printArea');
+      if (pa) pa.style.display = 'none';
+    });
+
+  }).catch(function(err) {
+    console.error('PDF error:', err);
+    document.getElementById('ov').classList.remove('show');
+    document.getElementById('subbtn').disabled = false;
+    showToast('เกิดข้อผิดพลาดในการสร้าง PDF: ' + err.message, 'te');
+  });
+}
+
+function buildPrintArea(data) {
+  var pa = document.getElementById('printArea');
+  if (!pa) {
+    pa = document.createElement('div');
+    pa.id = 'printArea';
+    document.body.appendChild(pa);
+  }
+  pa.style.cssText = 'position:fixed;left:-9999px;top:0;width:780px;background:white;font-family:Sarabun,sans-serif;font-size:12px;color:#000;padding:0;';
+  pa.style.display = 'block';
+
+  function r2(l1,v1,l2,v2) {
+    return '<tr>' +
+      '<td style="padding:4px 8px;color:#444;font-size:11px;font-weight:bold;width:18%;vertical-align:top">' + l1 + '</td>' +
+      '<td style="padding:4px 8px;width:32%;vertical-align:top">' + (v1||'-') + '</td>' +
+      (l2 !== undefined ? '<td style="padding:4px 8px;color:#444;font-size:11px;font-weight:bold;width:18%;vertical-align:top">' + (l2||'') + '</td><td style="padding:4px 8px;vertical-align:top">' + (v2||'-') + '</td>' : '<td colspan="2"></td>') +
+      '</tr>';
+  }
+  function r1(l,v) {
+    return '<tr><td style="padding:4px 8px;color:#444;font-size:11px;font-weight:bold;width:18%;vertical-align:top">' + l + '</td>' +
+      '<td colspan="3" style="padding:4px 8px;vertical-align:top">' + (v||'-') + '</td></tr>';
+  }
+  function sec(t) {
+    return '<div style="background:#0d5c2e;color:white;padding:6px 12px;font-weight:bold;font-size:12px;margin-top:10px">' + t + '</div>';
+  }
+  function tbl(rows) {
+    return '<table width="100%" style="border-collapse:collapse;font-size:12px">' + rows + '</table>';
+  }
+
+  var addr = [data.addrNo, data.addrMoo?'หมู่'+data.addrMoo:'', data.addrRoad?'ถ.'+data.addrRoad:'', data.subdistrict, data.district, data.province, data.postcode].filter(Boolean).join(' ');
+
+  var photoCell = data.photo && data.photo.indexOf('data:image')===0
+    ? '<img src="' + data.photo + '" style="width:90px;height:118px;object-fit:cover;border:1px solid #ccc;display:block">'
+    : '<div style="width:90px;height:118px;border:2px dashed #ccc;display:flex;align-items:center;justify-content:center;font-size:10px;color:#999;text-align:center">รูปถ่าย<br>1 นิ้ว</div>';
+
+  var expRows = data.experiences.map(function(ex) {
+    return '<tr style="border-bottom:1px solid #e0ede5">' +
+      [ex.company||'', ex.from||'', ex.to||'', ex.position||'', ex.desc||'', ex.salary||'', ex.reason||''].map(function(v){
+        return '<td style="padding:3px 5px;font-size:11px">' + v + '</td>';
+      }).join('') + '</tr>';
+  }).join('');
+
+  var eduRows = data.education.map(function(ed) {
+    return '<tr style="border-bottom:1px solid #e0ede5">' +
+      [ed.level||'', ed.institution||'', ed.major||'', ed.from||'', ed.to||''].map(function(v){
+        return '<td style="padding:3px 5px;font-size:11px">' + v + '</td>';
+      }).join('') + '</tr>';
+  }).join('');
+
+  pa.innerHTML =
+    '<div style="background:#0d5c2e;color:white;padding:16px 20px;text-align:center">' +
+      '<div style="font-size:18px;font-weight:800">บริษัท ลาดกระบัง เข็มเจาะ จำกัด</div>' +
+      '<div style="font-size:11px;margin-top:3px">LADKRABANG BORED PILE CO., LTD.</div>' +
+      '<div style="font-size:11px">19/2 ถนนฉลองกรุง แขวงลำปลาทิว เขตลาดกระบัง กรุงเทพฯ 10520 | Tel: (02) 737-4458 Fax: (02) 737-4459</div>' +
+      '<div style="font-size:13px;color:#7fffc4;margin-top:5px;font-weight:bold">ใบสมัครงาน / APPLICATION FOR EMPLOYMENT</div>' +
+      '<div style="font-size:10px;opacity:.7;margin-top:2px">FM-HR-01-03 : Rev.00 : Eff.10-04-2568</div>' +
+    '</div>' +
+
+    '<div style="padding:12px 20px">' +
+      '<div style="display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:8px">' +
+        '<div style="font-size:12px">' +
+          '<div><strong>ตำแหน่งที่สมัคร:</strong> ' + (data.position||'-') + ' &nbsp;&nbsp; <strong>เงินเดือน:</strong> ' + (data.salary?Number(data.salary).toLocaleString()+' บาท/เดือน':'-') + '</div>' +
+          '<div style="margin-top:3px"><strong>วันที่สมัคร:</strong> ' + data.submittedAt + '</div>' +
+        '</div>' +
+        '<div style="text-align:center">' +
+          photoCell +
+          '<div style="font-size:9px;color:#777;margin-top:2px">รูปถ่าย 1 นิ้ว</div>' +
+        '</div>' +
+      '</div>' +
+
+      sec('ประวัติส่วนตัว (Personal Information)') +
+      tbl(
+        r2('ชื่อ-นามสกุล',data.nameTH,'Name',data.nameEN) +
+        r1('ที่อยู่ปัจจุบัน',addr) +
+        r2('โทรศัพท์',data.tel,'มือถือ',data.mobile) +
+        r2('อีเมล์',data.email,'ที่พักอาศัย',data.housing) +
+        r2('วันเดือนปีเกิด',data.dob,'อายุ',(data.age||'-')+' ปี') +
+        r2('เชื้อชาติ',data.race,'สัญชาติ',data.nationality) +
+        r2('ศาสนา',data.religion,'เพศ',data.gender) +
+        r2('บัตรประชาชน',data.idcard,'บัตรหมดอายุ',data.idexpiry) +
+        r2('ส่วนสูง',(data.height||'-')+' ซม.','น้ำหนัก',(data.weight||'-')+' กก.') +
+        r2('สถานภาพ',data.marital,'ภาวะทหาร',data.military)
+      ) +
+
+      sec('ประวัติครอบครัว (Family Information)') +
+      tbl(
+        r2('บิดา',data.fatherName,'อายุ',(data.fatherAge||'-')+' ปี') +
+        r1('อาชีพบิดา',data.fatherJob) +
+        r2('มารดา',data.motherName,'อายุ',(data.motherAge||'-')+' ปี') +
+        r1('อาชีพมารดา',data.motherJob) +
+        (data.spouseName ? r2('คู่สมรส',data.spouseName,'ตำแหน่ง',data.spousePos) + r1('สถานที่ทำงาน',data.spouseWork) : '') +
+        r1('จำนวนบุตร',(data.children||'0')+' คน')
+      ) +
+
+      (data.experiences.length > 0 ?
+        sec('รายละเอียดงานที่ผ่านมา (Working Experience)') +
+        '<table width="100%" style="border-collapse:collapse;font-size:11px">' +
+          '<tr style="background:#e8f5ee">' +
+            '<th style="padding:4px 5px;text-align:left">บริษัท/สถานที่ทำงาน</th>' +
+            '<th style="padding:4px 5px">ตั้งแต่</th>' +
+            '<th style="padding:4px 5px">ถึง</th>' +
+            '<th style="padding:4px 5px;text-align:left">ตำแหน่ง</th>' +
+            '<th style="padding:4px 5px;text-align:left">ลักษณะงาน</th>' +
+            '<th style="padding:4px 5px">ค่าจ้าง</th>' +
+            '<th style="padding:4px 5px;text-align:left">เหตุที่ออก</th>' +
+          '</tr>' + expRows +
+        '</table>' : '') +
+
+      (data.education.length > 0 ?
+        sec('การศึกษา (Education)') +
+        '<table width="100%" style="border-collapse:collapse;font-size:11px">' +
+          '<tr style="background:#e8f5ee">' +
+            '<th style="padding:4px 5px;text-align:left">ระดับการศึกษา</th>' +
+            '<th style="padding:4px 5px;text-align:left">สถาบันการศึกษา</th>' +
+            '<th style="padding:4px 5px;text-align:left">สาขาวิชา</th>' +
+            '<th style="padding:4px 5px">ตั้งแต่</th>' +
+            '<th style="padding:4px 5px">ถึง</th>' +
+          '</tr>' + eduRows +
+        '</table>' : '') +
+
+      sec('ภาษาและความสามารถพิเศษ (Language & Special Ability)') +
+      tbl(
+        r2('ภาษาไทย (พูด/เขียน/อ่าน)',[data.thaiSpeak,data.thaiWrite,data.thaiRead].filter(Boolean).join('/'),'ภาษาอังกฤษ (พูด/เขียน/อ่าน)',[data.engSpeak,data.engWrite,data.engRead].filter(Boolean).join('/')) +
+        r2('พิมพ์ดีดไทย',(data.typingTH||'0')+' คำ/นาที','พิมพ์ดีดอังกฤษ',(data.typingEN||'0')+' คำ/นาที') +
+        r1('คอมพิวเตอร์',data.computer) +
+        r2('ขับรถยนต์',data.driveCar?'ได้':'ไม่ได้','ขับรถจักรยานยนต์',data.driveMoto?'ได้':'ไม่ได้') +
+        r2('งานอดิเรก',data.hobbies,'กีฬา',data.sports) +
+        r2('ปฏิบัติงานต่างจังหวัด',data.upcountry,'เครื่องใช้สำนักงาน',data.officeMachine) +
+        ([data.skill1,data.skill2,data.skill3,data.skillOther].filter(Boolean).length ?
+          r1('ความสามารถพิเศษ',[data.skill1,data.skill2,data.skill3,data.skillOther].filter(Boolean).join(' / ')) : '')
+      ) +
+
+      sec('ข้อมูลเพิ่มเติม') +
+      tbl(
+        r2('ผู้ติดต่อฉุกเฉิน',data.emergencyName,'ความสัมพันธ์',data.emergencyRelation) +
+        r2('โทรฉุกเฉิน',data.emergencyTel,'ทราบข่าวจาก',data.referral) +
+        (data.relative ? r1('ญาติ/เพื่อนในบริษัท',data.relative) : '') +
+        (data.selfIntro ? r1('แนะนำตัว',data.selfIntro) : '')
+      ) +
+
+      '<div style="margin-top:20px;padding-top:10px;border-top:2px solid #0d5c2e;font-size:10px;color:#555;line-height:1.7">' +
+        'ข้าพเจ้าขอรับรองว่าข้อความดังกล่าวทั้งหมดในใบสมัครนี้เป็นความจริงทุกประการ หลังจากบริษัทฯ จ้างเข้ามาทำงานแล้วปรากฏว่า ข้อความในใบสมัครงาน เอกสารที่นำมาแสดง หรือรายละเอียดที่ให้ไว้ไม่เป็นความจริง บริษัทฯ มีสิทธิ์ที่จะเลิกจ้างข้าพเจ้าได้โดยไม่ต้องจ่ายเงินชดเชยหรือค่าเสียหายใดๆ ทั้งสิ้น<br>' +
+        'I certify all statements in this application are true. The Company has right to terminate my employment without any compensation or severance pay whatsoever.' +
+      '</div>' +
+      '<div style="text-align:right;margin-top:24px;font-size:12px">ลายมือชื่อผู้สมัคร .............................................</div>' +
+    '</div>';
+}
+
+function makeExpRow() {
+  return '<tr>' + [
+    '<input type="text" name="ec[]">',
+    '<input type="text" name="ef[]" placeholder="เดือน/ปี">',
+    '<input type="text" name="et[]" placeholder="เดือน/ปี">',
+    '<input type="text" name="ep[]">',
+    '<input type="text" name="ed[]">',
+    '<input type="number" name="es[]">',
+    '<input type="text" name="er[]">',
+    '<button type="button" onclick="delRow(this)" style="background:none;border:none;cursor:pointer;color:#c00;font-size:15px">x</button>'
+  ].map(function(c){ return '<td>' + c + '</td>'; }).join('') + '</tr>';
+}
+
+function makeRelRow() {
+  return '<div class="g g4" style="margin-bottom:5px">' + [
+    ['ชื่อ-สกุล','rn[]','text'],
+    ['อายุ','ra[]','number'],
+    ['อาชีพ','rj[]','text'],
+    ['ความสัมพันธ์','rr[]','text']
+  ].map(function(f){
+    return '<div class="fld"><label>'+f[0]+'</label><input type="'+f[2]+'" name="'+f[1]+'"></div>';
+  }).join('') + '</div>';
+}
+
+function clearForm() {
+  if (!confirm('ล้างข้อมูลทั้งหมด?')) return;
+  document.getElementById('form').reset();
+  photoData = '';
+  document.getElementById('pimg').src = '';
+  document.getElementById('pimg').style.display = 'none';
+  document.getElementById('plbl').style.display = '';
+  document.getElementById('expBody').innerHTML = makeExpRow();
+  document.getElementById('relBody').innerHTML = makeRelRow();
+}
+
+function resetForm() {
+  clearForm();
+  document.getElementById('done').classList.remove('show');
+  document.getElementById('fw').style.display = 'block';
+  document.getElementById('subbtn').disabled = false;
+}
+
+function showToast(msg, t) {
+  var el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = 'toast ' + (t||'ts') + ' show';
+  setTimeout(function(){ el.classList.remove('show'); }, 4000);
+}
+
+</script>
+</body>
+</html>
