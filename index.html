@@ -291,6 +291,7 @@ textarea{resize:vertical;min-height:68px;}
             <th style="min-width:110px">สาขาวิชา</th>
             <th style="min-width:65px">ตั้งแต่</th>
             <th style="min-width:65px">ถึง</th>
+            <th style="min-width:75px">เกรดเฉลี่ย</th>
           </tr></thead>
           <tbody>
             <tr><td><input type="text" value="มัธยมศึกษาตอนปลาย" readonly></td><td><input type="text" name="ei[]"></td><td><input type="text" name="em[]"></td><td><input type="text" name="ef2[]" placeholder="ปี พ.ศ."></td><td><input type="text" name="et2[]"></td><td><input type="text" name="egpa[]" placeholder="เช่น 3.50"></td></tr>
@@ -445,7 +446,7 @@ function handleFile(input, textId, dataVar, nameVar) {
   };
   reader.readAsDataURL(file);
 }
-var SURL = 'https://script.google.com/macros/s/AKfycbwTyVuIxbmW4j7wbAB1-ps9joUDYq5PeQOAvX02KlRGPjSp3LQx04-mjr5MRcPrPtr4fg/exec';
+var SURL = 'https://script.google.com/macros/s/AKfycbwty1mScZKwg46_8YDnrk5ep_ikoQILNR2w1aTPlsgZMwBal26pLQYSJAmFSERqM4Xnag/exec';
 
 function previewPhoto(input) {
   var file = input.files[0];
@@ -713,13 +714,41 @@ function sendData(data, pdfB64) {
   payload.portBase64 = portData ? portData.split(',')[1] : '';
   payload.portName = portName;
 
+  // Send main data + PDF
+  var mainPayload = JSON.parse(JSON.stringify(payload));
+  
   fetch(SURL, {
     method: 'POST',
     mode: 'no-cors',
-    body: JSON.stringify(payload)
+    body: JSON.stringify(mainPayload)
   }).catch(function(err) {
-    console.log('Fetch (no-cors):', err);
-  }).finally(function() {
+    console.log('Fetch main (no-cors):', err);
+  });
+
+  // ส่งไฟล์แนบแยก request เพื่อไม่ให้ payload ใหญ่เกิน
+  if (resumeData || portData) {
+    var filePayload = {
+      type: 'attachments',
+      nameTH: data.nameTH,
+      position: data.position,
+      resumeBase64: resumeData ? resumeData.split(',')[1] : '',
+      resumeName: resumeName,
+      portBase64: portData ? portData.split(',')[1] : '',
+      portName: portName
+    };
+    setTimeout(function() {
+      fetch(SURL, {
+        method: 'POST',
+        mode: 'no-cors',
+        body: JSON.stringify(filePayload)
+      }).catch(function(err) {
+        console.log('Fetch files (no-cors):', err);
+      });
+    }, 2000);
+  }
+
+  var dummyPromise = Promise.resolve();
+  dummyPromise.finally(function() {
     var a = document.createElement('a');
     a.href = 'data:application/pdf;base64,' + pdfB64;
     a.download = 'LBB_ใบสมัครงาน_' + (data.nameTH||'applicant') + '.pdf';
@@ -803,9 +832,11 @@ function buildPrintArea(data) {
       '</div>' +
       '<div style="padding:12px 20px;background:#f8fffe;border-bottom:2px solid #0d5c2e;display:flex;justify-content:space-between;align-items:flex-start">' +
         '<div style="font-size:12px;line-height:1.8">' +
-          '<div><strong>ตำแหน่งที่ต้องการสมัคร:</strong> ' + data.position + '</div>' +
-          '<div><strong>เงินเดือนที่ต้องการ:</strong> ' + (data.salary && data.salary!=='-' ? Number(data.salary).toLocaleString()+' บาท/เดือน' : data.salary) + '</div>' +
-          '<div><strong>วันที่สมัคร:</strong> ' + data.submittedAt + '</div>' +
+          '<div style="display:flex;gap:40px;flex-wrap:wrap">' +
+            '<div><span style="color:#555;font-size:11px">ตำแหน่งที่ต้องการสมัคร</span><br><strong>' + data.position + '</strong></div>' +
+            '<div><span style="color:#555;font-size:11px">เงินเดือนที่ต้องการ</span><br><strong>' + (data.salary && data.salary!=='-' ? Number(data.salary).toLocaleString()+' บาท/เดือน' : data.salary) + '</strong></div>' +
+          '</div>' +
+          '<div style="margin-top:4px;color:#666;font-size:11px"><strong>วันที่สมัคร:</strong> ' + data.submittedAt + '</div>' +
         '</div>' +
         '<div style="text-align:center">' +
           photoCell +
